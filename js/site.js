@@ -1,118 +1,104 @@
-function add() {
-  //get the numbers
-  let numberOne = document.getElementById("firstNumber").value;
-  let numberTwo = document.getElementById("secondNumber").value;
+function totalMonthlyPayment() {
+    //get the inputs
+    let loanAmount = document.getElementById('loanAmount').value;
+    let termMonths = document.getElementById('termMonths').value;
+    let rate = document.getElementById('interestRate').value;
 
-  //turn them into integers
-  numberOne = parseFloat(numberOne);
-  numberTwo = parseFloat(numberTwo);
+    //turn them into integers
+    loanAmount = parseFloat(loanAmount);
+    termMonths = parseFloat(termMonths);
+    rate = parseFloat(rate);
 
-  //add the first and second numbers
-  let sum = numberOne + numberTwo;
+    //make calculation
+    let monthlyPayment = (loanAmount * (rate / 1200)) / (1 - ((1 + rate / 1200)**(-termMonths)));
 
-  //display the result
-  let resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = sum;
+    //display result
+    let resultDiv = document.getElementById('monthlyPayment');
+    resultDiv.innerHTML = Math.round(monthlyPayment).toLocaleString();
+
+    return monthlyPayment;
 }
 
-function subtract() {
-  let numberOne = document.getElementById("firstNumber").value;
-  let numberTwo = document.getElementById("secondNumber").value;
+function monthlyPaymentData() {
+    let loanAmount = document.getElementById('loanAmount').value;
+    let termMonths = document.getElementById('termMonths').value;
 
-  numberOne = parseFloat(numberOne);
-  numberTwo = parseFloat(numberTwo);
+    loanAmount = parseFloat(loanAmount);
+    termMonths = parseFloat(termMonths);
 
-  let difference = numberOne - numberTwo;
+    let totalPrincipal = loanAmount;
 
-  let resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = difference;
-}
+    let monthlyPayment = totalMonthlyPayment();
 
-function multiply() {
-  let numberOne = document.getElementById("firstNumber").value;
-  let numberTwo = document.getElementById("secondNumber").value;
-
-  numberOne = parseFloat(numberOne);
-  numberTwo = parseFloat(numberTwo);
-
-  let product = numberOne * numberTwo;
-
-  let resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = product;
-}
-
-function divide() {
-  let numberOne = document.getElementById("firstNumber").value;
-  let numberTwo = document.getElementById("secondNumber").value;
-
-  numberOne = parseFloat(numberOne);
-  numberTwo = parseFloat(numberTwo);
-
-  let quotient = numberOne / numberTwo;
-
-    if (numberTwo == 0) {
-        quotient = "Cannot divide by zero!";
-    }
-
-  let resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = quotient;
-}
-
-function sumAll() {
-    let numberString = document.getElementById('numberSeries').value;
-    //numberString = '12345'
-
-    let numberArray = numberString.split('')
-    //numberArray = ['1', '2', '3', '3', '4', '5']
+    let totalCost = monthlyPayment * termMonths;
     
-    let sum = 0; //running total
+    let totalInterest = totalCost - totalPrincipal;
 
-    for (let i = 0; i < numberArray.length; i++) {
-        
-        let currentNumber = numberArray[i];
-        //currentNumber = '1'
-        
-        currentNumber = parseInt(currentNumber);
-        //currentNumber = 1
+    //display results
+    let principalResult = document.getElementById('totalPrincipal');
+    principalResult.innerHTML = Math.round(totalPrincipal).toLocaleString();
 
-        sum = sum + currentNumber;
-    }
+    let intResult = document.getElementById('totalInt');
+    intResult.innerHTML = Math.round(totalInterest).toLocaleString();
 
-    let resultsDiv = document.getElementById('results');
-    resultsDiv.innerText = sum;
+    let costResult = document.getElementById('totalCost');
+    costResult.innerHTML = Math.round(totalCost).toLocaleString();
 }
 
-function multiplyAll() {
-  let numberString = document.getElementById('numberSeries').value;
-  //numberString = '12345'
+function generateMonth() {
+  let termMonths = document.getElementById('termMonths').value;
+  termMonths = parseFloat(termMonths);
+  
+  let start = 0;
+  let end = termMonths;
+  
+  let monthArray = [];
 
-  let numberArray = numberString.split('');
-  //numberArray = ['1', '2', '3', '3', '4', '5']
-
-  let sum = 1; //running total
-
-  for (let i = 0; i < numberArray.length; i++) {
-    let currentNumber = numberArray[i];
-    //currentNumber = '1'
-
-    currentNumber = parseInt(currentNumber);
-    //currentNumber = 1
-
-    sum = sum * currentNumber;
+  for (let month = start; month <= end; month++) {
+    monthArray.push(month); 
   }
 
-  let resultsDiv = document.getElementById('results');
-  resultsDiv.innerText = sum;
+  return monthArray; 
 }
 
-function minimum() {
+function calculateBalance() {
+    let loanAmount = document.getElementById("loanAmount").value;
+    loanAmount = parseFloat(loanAmount);
+
+
+    let monthArray = generateMonth();
+
+    for (let i = 0; i < monthArray.length; i++) {
+        let startingBalance = loanAmount[i];
+
+        currentBalance = 
+    }
+}
+
+function calculateInt() {
+    let loanAmount = document.getElementById("loanAmount").value;
+    loanAmount = parseFloat(loanAmount);
+
+    let rate = document.getElementById("interestRate").value;
+    rate = parseFloat(rate);
+
+    let monthArray = generateMonth();
+
+    let int = 0;
+
+    for (let i = 0; i < monthArray.length; i++) {
+      currentInt = loanAmount * (rate / 1200)[i];
+    
+      int = int + currentInt;
+    }
+    return int;
+}
+
+function calculatePrincipalPayment() {
+    
+}
+
+function calculateTotalInt() {
 
 }
 
-function maximum() {
-
-}
-
-function average() {
-
-}
