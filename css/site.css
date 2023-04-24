@@ -59,7 +59,7 @@ footer {
     list-style-type: none;
 }
 .checklist>li i {
-    color:var(--rd-oceangreen-color);
+    color: var(--rd-oceangreen-color);
     padding-right: .5rem;
 }
 
