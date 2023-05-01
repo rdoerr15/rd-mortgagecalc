@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mortgage Calculator</title>
+    <title>Magnanimous Mortgage</title>
 
     <!--bootsrap css-->
     <link
@@ -39,7 +39,7 @@
 
 
     <!--favicon-->
-    <link rel="shortcut icon" href="/img/logoLightBG.jpg" type="image/x-icon" />
+    <link rel="shortcut icon" href="/img/MortgageMiniLogo.png" type="image/x-icon" />
 
 </head>
 
@@ -48,8 +48,8 @@
            <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
                <div class="container">
                    <a class="navbar-brand" href="/index.html">
-                        <img src="/img/logoDarkBG.jpg" height="50" />
-                        Magnanimous Mortgages
+                        <img src="/img/MortgageMiniLogo.png" class="navLogo" height="50" />
+                        Magnanimous Mortgage
                     </a>
                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -88,25 +88,132 @@
             <div class="col-12 col-lg-8">
                 <pre class="line-numbers">
                     <code class="language-js">
-function displayMessage() {
-    let msg = document.getElementById('message').value;
-    //alert(msg);
+function getValues() {
+    let principal = document.getElementById('amount').value;
+    let term = document.getElementById('term').value;
+    let rate = document.getElementById('interest').value;
 
-    Swal.fire(
-        {
-            backdrop: false,
-            title: 'App Name',
-            text: msg
-        }
-    );
+    principal = parseFloat(principal);
+    term = parseInt(term);
+    rate = parseFloat(rate);
+
+    if (!isNaN(principal) && !isNaN(term) && !isNaN(rate)
+        && principal > 0 && term > 0 && rate > 0) {
+          
+          let totals = calculateTotals(principal, term, rate);
+          let payments = calculatePayments(principal, term, rate);
+
+          displayTotals(totals);
+          displayPayments(payments);
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        backdrop: false,
+        title: 'Sorry!',
+        text: 'Please eneter valid numbers for your loan details.'
+      })
+    }
 }
+
+function calculateTotals(principal, term, rate) {
+  
+  let monthlyPayment = calculateMonthlyPayment(principal, term, rate)
+  
+  let totalCost = monthlyPayment * term;
+  
+  let totalInterest = totalCost - principal;
+
+  let totals = {
+    monthlyPayment: monthlyPayment,
+    principal: principal,
+    cost: totalCost,
+    interest: totalInterest
+  };
+
+  return totals;
+}
+
+
+function calculatePayments(principal, term, rate) {
+  
+    let monthlyPayment = calculateMonthlyPayment(principal, term, rate)
+  
+    let balance = principal;
+    let totalInterest = 0;
+
+    let payments = [];
+
+    for (let month = 1; month <= term; month += 1) {
+        let interest = balance * (rate/1200);
+        let principalPayment = monthlyPayment - interest;
+        totalInterest = totalInterest + interest; 
+        balance = balance - principalPayment;
+
+        let loanPayment = {
+          month: month,
+          payment: monthlyPayment,
+          principal: principalPayment,
+          interest: interest,
+          totalInterest: totalInterest,
+          balance: Math.abs(balance) 
+        }
+        payments.push(loanPayment);
+      }
+    return payments;
+  }
+
+function calculateMonthlyPayment(principal, term, rate) {
+    let monthlyRate = rate / 1200;
+    let monthlyPayment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -term));
+
+    return monthlyPayment;
+}
+
+function displayTotals(loanTotals) {
+    let formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+
+    document.getElementById('monthlyPayment').textContent = formatter.format(loanTotals.monthlyPayment);
+    document.getElementById('totalPrincipal').textContent = formatter.format(loanTotals.principal);
+    document.getElementById('totalInterest').textContent = formatter.format(loanTotals.interest);
+    document.getElementById('totalCost').textContent = formatter.format(loanTotals.cost);
+}
+
+function displayPayments(loanPayments) {
+    const tableRowTemplate = document.getElementById('paymentsRow');
+    let tableBody = document.getElementById('paymentsTable');
+    let formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+
+    for(let i = 0; i < loanPayments.length; i++) {
+        let payment = loanPayments[i];
+
+        let tableRow = document.importNode(tableRowTemplate.content, true);
+        let tds = tableRow.querySelectorAll('td');
+
+        tds[0].textContent = payment.month;
+        tds[1].textContent = formatter.format(payment.payment);
+        tds[2].textContent = formatter.format(payment.principal);
+        tds[3].textContent = formatter.format(payment.interest);
+        tds[4].textContent = formatter.format(payment.totalInterest);
+        tds[5].textContent = formatter.format(payment.balance);
+
+        tableBody.appendChild(tableRow);
+    }
+}
+
+
+
                     </code>
                 </pre>
             </div>
             <div class="col-12 col-lg-4">
-                <p>The code is structured in one function</p>
-                <h5>displayMessage</h5>
-                <p>Prints out the message</p>
+                <p>The code is structured into six separate functions.</p>
             </div>
         </div>
     </main>
@@ -119,17 +226,11 @@ function displayMessage() {
             <img src="/img/logoDarkBG.jpg" height="50" />
             </div>
             <div class="col text-md-end">
-                <a href="https://linkedin.com/my-profile"
+                <a href="https://www.linkedin.com/in/ryan-doerr-39a23626b/"
                 ><i class="socialicons bi bi-linkedin p-2"></i
                 ></a>
-                <a href="https://github.com/my-profile"
+                <a href="https://github.com/rdoerr15"
                 ><i class="socialicons bi bi-github p-2"></i
-                ></a>
-                <a href="https://twitter.com/my-profile"
-                ><i class="socialicons bi bi-twitter p-2"></i
-                ></a>
-                <a href="https://youtube.com/my-profile"
-                ><i class="socialicons bi bi-youtube p-2"></i
                 ></a>
             </div>
             <div class="col text-light order-md-first text-md-start">

@@ -55,11 +55,15 @@ footer {
 }
 /* end sticky footer*/
 
+.navLogo {
+    border-radius: 5px;
+}
+
 .checklist {
     list-style-type: none;
 }
 .checklist>li i {
-    color: var(--rd-oceangreen-color);
+    color: #ef494b;
     padding-right: .5rem;
 }
 
@@ -70,6 +74,18 @@ footer {
 
 .appLogo {
     max-width: 400px;
+    border-radius: 25px;
+}
+
+.btn-primary {
+    background-color: #ef494b;
+    border-color: var(--rd-dark-color);
+    transition: all .5s;
+}
+.btn-primary:hover {
+    background-color: var(--rd-dark-color);
+    border-color: var(--rd-light-color);
+    transition: all .5s;
 }
 
 /* start navbar */
