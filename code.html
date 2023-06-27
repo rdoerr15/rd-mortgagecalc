@@ -74,7 +74,7 @@
                                <a class="nav-link" href="https://ryandoerr-portfolio.netlify.app/">About</a>
                            </li>
                            <li class="nav-item">
-                               <a class="nav-link" href="#">Blog</a> <!--CHANGE THIS LINK-->
+                               <a class="nav-link" target="_blank" href="https://blogbook-production.up.railway.app/">Blog</a> <!--CHANGE THIS LINK-->
                            </li>
                        </ul>
                    </div>
@@ -206,14 +206,51 @@ function displayPayments(loanPayments) {
         tableBody.appendChild(tableRow);
     }
 }
-
-
-
                     </code>
                 </pre>
             </div>
             <div class="col-12 col-lg-4">
-                <p>The code is structured into six separate functions.</p>
+                <p>The code is structured into six separate functions. Below you can get a better understanding of how each function works.</p>
+                <hr>
+                <h5>getValues( )</h5>
+                <p>
+                    This function retrieves the values entered by the user for the loan amount, term, and interest rate from the HTML document. 
+                    It then validates the inputs and calls other functions to calculate and display the loan details. 
+                    If any input is invalid or negative, it shows an error message using the Swal.fire() method.
+                </p>
+                <hr>
+                <h5>calculateTotals(principal, term, rate)</h5>
+                <p>
+                    This function takes the principal amount, loan term, and interest rate as input parameters. 
+                    It uses the calculateMonthlyPayment() function to calculate the monthly payment amount and then calculates the total cost and total interest for the loan. 
+                    The results are returned as an object containing the calculated values.
+                </p>
+                <hr>
+                <h5>calculatePayments(principal, term, rate)</h5>
+                <p>
+                    This function also takes the principal amount, loan term, and interest rate as input parameters. 
+                    It uses the calculateMonthlyPayment() function to calculate the monthly payment amount. 
+                    It then iterates over each month of the loan term, calculating the interest, principal payment, total interest, and remaining balance for each month. 
+                    The results are stored in an array of objects representing the loan payment details for each month.
+                </p>
+                <hr>
+                <h5>calculateMonthlyPayment(principal, term, rate)</h5>
+                <p>
+                    This function calculates the monthly payment amount based on the principal amount, loan term, and interest rate using a mathematical formula.
+                </p>
+                <hr>
+                <h5>displayTotals(loanTotals)</h5>
+                <p>
+                    This function receives the loan totals object calculated in the calculateTotals() function. 
+                    It uses the Intl.NumberFormat object to format the values as currency and then updates the corresponding HTML elements with the formatted values.
+                </p>
+                <hr>
+                <h5>displayPayments(loanPayments)</h5>
+                <p>
+                    This function receives the array of loan payment objects calculated in the calculatePayments() function. 
+                    It uses a table row template from the HTML document and the Intl.NumberFormat object to format the payment details. 
+                    It then clones the template, populates the table cells with the formatted values, and appends the row to the payments table in the HTML document.
+                </p>
             </div>
         </div>
     </main>

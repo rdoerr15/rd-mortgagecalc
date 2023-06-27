@@ -23,7 +23,7 @@ function getValues() {
         icon: 'error',
         backdrop: false,
         title: 'Sorry!',
-        text: 'Please eneter valid numbers for your loan details.'
+        text: 'Please enter valid numbers for your loan details.'
       })
     }
 }
